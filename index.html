@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSEGTEAMS</title>
+  <title>Login</title>
+  <style>
+    /* จัดให้อยู่ตรงกลาง */
+    h2 {
+      text-align: center;
+      font-size: 2em;
+      margin-top: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  
+  <header>
+    <h1>Movie Ticket BY VSEGTEAMS</h1>
+  </header>
+
+
+
+  
+  <main>
+    <!-- ส่วนของ Login และ Register -->
+    <section id="login-register-container">
+      
+      <!-- หน้า Login -->
+      <div id="login-form">
+        <h2>Login</h2>
+        <form onsubmit="return loginUser(event)">
+          <div class="form-group">
+            <label for="login-username">User:</label>
+            <input type="text" id="login-username" name="login-username" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="login-password" required>
+          </div>
+          <button type="submit">login</button>
+          <p>No have Account? <a href="javascript:void(0)" onclick="showRegister()">Register</a></p>
+
+
+        </form>
+      </div>
+
+      <!-- หน้า Register -->
+      <div id="register-form" style="display: none;">
+        <h2>Register</h2>
+        <form onsubmit="return registerUser(event)">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm-password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+          </div>
+          <button type="submit">Register</button>
+          <p>Have Account? <a href="javascript:void(0)" onclick="showLogin()">Login</a></p>
+        </form>
+      </div>
+      <script>
+        // ฟังก์ชันสำหรับการล็อกอิน
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+      
+          const username = document.getElementById('login-username').value;
+          const password = document.getElementById('login-password').value;
+      
+          fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 'success') {
+              alert('Login successful');
+            } else {
+              alert('Invalid credentials');
+            }
+          })
+          .catch(error => console.error('Error:', error));
+        });
+      </script>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+  
+    <!-- ส่วนของการเลือกภาพยนตร์ -->
+    <section id="movie-selection" style="display:none;">
+      
+      <!-- ส่วนของคำว่า VSEG ที่มุมซ้ายบน -->
+      <div id="vseg-btn" onclick="goBackToMovieSelection()" style="position: absolute; top: 10px; left: 10px; font-size: 24px; font-weight: bold; cursor: pointer;">
+        VSEG
+      </div>
+      <!-- ปุ่มบัญชีที่มุมขวาบน -->
+      <div id="account-btn" onclick="goToAccountPage()" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
+        <img src="Piceturemovies\icons8-account-32.png" alt="Account" style="width: 55px; height: 50px; border-radius: 50%;"/>
+      </div>
+
+      <script>
+        function goToAccountPage() {
+          window.location.href = 'account.html'; // ไปยังหน้า AccountPage
+        }
+      </script>
+
+      
+    
+      <h2>Select Movie</h2>
+      <!-- ตัวอย่างการเลือกภาพยนตร์ -->
+      <div class="movie">
+        <img src="Piceturemovies\TEE YOD2.jpg" alt="Movie 1" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('TEE YOD2', 'Piceturemovies\TEE YOD2.jpg')">TEE YOD2</button>
+      </div>
+
+      <div class="movie">
+        <img src="Piceturemovies\VENOM.jpg" alt="Movie 2" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('VENOM')">VENOM</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\THE LORD OF THE RINGS.jpg" alt="Movie 3" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('THE LORD OF THE RINGS')">THE LORD OF THE RINGS</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Fast X.jpg" alt="Movie 4" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Fast X')">Fast X</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Top Gun.webp" alt="Movie 5" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Top Gun')">Top Gun</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Deadpool.jpg" alt="Movie 6" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Deadpool')">Deadpool</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Meg 2.jpg" alt="Movie 7" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Meg 2')">Meg 2</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Bad Boys for Life.jpg" alt="Movie 8" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Bad Boys for Life')">Bad Boys for Life</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Kung_Fu_Panda_4_poster.jpg" alt="Movie 9" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Kung Fu Panda 4')">Kung Fu Panda 4</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Joker_-_Folie_à_Deux_poster.jpg" alt="Movie 10" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Joker: Folie à Deux')">Joker: Folie à Deux</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed.webp" alt="Movie 11" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Dune')">Dune</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\The_Dark_Knight_(2008_film).jpg" alt="Movie 12" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Movie 12The Dark Knight')">The Dark Knight</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (1).webp" alt="Movie 13" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Titanic')">Titanic</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (2).webp" alt="Movie 14" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Jaws')">Jaws</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (3).webp" alt="Movie 15" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Tenet')">Tenet</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (4).webp" alt="Movie 16" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Thor')">Thor</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (5).webp" alt="Movie 17" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Spider Man')">Spider Man</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\unnamed (6).webp" alt="Movie 18" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('The Medium')">The Medium</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Pee_Mak_International_Poster.jpg" alt="Movie 19" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Pee Mak')">Pee Mak</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Disney_The_Lion_King_2019.jpg" alt="Movie 20" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('The Lion King')">The Lion King</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\220px-Star-wars-force-awakens-official-poster.jpg" alt="Movie 21" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Star Wars: The Force Awakens')">Star Wars: The Force Awakens</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\ae88a538-b1a3-4ca9-aea1-786900d3da3a.jpg" alt="Movie 22" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Love Destiny: The Movie')">Love Destiny: The Movie</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Avatar_(2009_film)_poster.jpg" alt="Movie 23" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Avatar (2009 film)')">Avatar (2009 film)</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\ee05fff0-1d86-4eea-af3a-2070b6b36720.jpg" alt="Movie 24" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('The Undertaker')">The Undertaker</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\term3.jpg" alt="Movie 25" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Haunted Universities 3')">Haunted Universities 3</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\io2_payoff_squish_poster-s_29270ace.jpeg" alt="Movie 26" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Inside Out 2')">Inside Out 2</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\myboo.jpg" alt="Movie 27" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('My boo')">My boo</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Lahn Mah.jpg" alt="Movie 28" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Lahn Mah')">Lahn Mah</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\HOME FOR RENT.jpg" alt="Movie 29" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('HOME FOR RENT')">HOME FOR RENT</button>
+      </div>
+      <div class="movie">
+        <img src="Piceturemovies\Hormones.jpg" alt="Movie 30" class="movie-img">
+        <button class="select-btn" onclick="selectMovie('Hormones')">Hormones</button>
+      </div>
+
+    </section>
+<main>
+
+
+<!-- รายละเอียดของภาพยนตร์ -->
+<section id="movie-selection">
+
+  <!-- เพิ่มหนังตามต้องการ -->
+</section>
+
+<section id="seat-selection" style="display:none;">
+
+  <!-- ส่วนเลือกที่นั่ง -->
+  <div id="seat-selection" style="display:none;">
+    <!-- ส่วนที่แสดงที่นั่ง, สามารถมีฟังก์ชันที่ทำงานได้ -->
+  </div>
+
+
+
+  <div id="time-selection" style="text-align: center; margin-bottom:5px;">
+    <div class="time-btns">
+      <button class="time-btn" onclick="selectTime('10:00')">10:00</button>
+      <button class="time-btn" onclick="selectTime('13:00')">13:00</button>
+      <button class="time-btn" onclick="selectTime('16:00')">16:00</button>
+      <button class="time-btn" onclick="selectTime('19:00')">19:00</button>
+      <button class="time-btn" onclick="selectTime('22:00')">22:00</button>
+      <button class="time-btn" onclick="selectTime('01:00')">01:00</button>
+      <button class="time-btn" onclick="selectTime('03:00')">03:00</button>
+
+    </div>
+  </div>
+  <div class="screen-indicator">
+    Screen
+  </div>
+  <!-- ส่วนของคำว่า VSEG ที่มุมซ้ายบน -->
+  <!-- ปุ่ม VSEG ที่มุมซ้ายบน -->
+  <div id="vseg-btn" onclick="goBackToMovieSelection()" style="position: absolute; top: 10px; left: 10px; font-size: 24px; font-weight: bold; cursor: pointer;">
+    VSEG
+  </div>
+  <!-- ปุ่มบัญชีที่มุมขวาบน เป็นแค่รูป -->
+  <!-- ปุ่มบัญชีที่มุมขวาบน เป็นแค่รูป -->
+<div id="account-btn" onclick="goToAccountPage()" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
+  <img src="Piceturemovies\icons8-account-32.png"style="width: 30px; height: 30px; border-radius: 50%;"/>
+</div>
+
+  <div class="seats">
+    <!-- แถวที่ 1 -->
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">A1</button>
+      <button class="seat" onclick="selectSeat(this)">A2</button>
+      <button class="seat" onclick="selectSeat(this)">A3</button>
+      <button class="seat" onclick="selectSeat(this)">A4</button>
+      <button class="seat" onclick="selectSeat(this)">A5</button>
+      <button class="seat" onclick="selectSeat(this)">A6</button>
+      <button class="seat" onclick="selectSeat(this)">A7</button>
+      <button class="seat" onclick="selectSeat(this)">A8</button>
+      <button class="seat" onclick="selectSeat(this)">A9</button>
+      <button class="seat" onclick="selectSeat(this)">A10</button>
+      <button class="seat" onclick="selectSeat(this)">A11</button>
+      <button class="seat" onclick="selectSeat(this)">A12</button>
+      <button class="seat" onclick="selectSeat(this)">A13</button>
+      <button class="seat" onclick="selectSeat(this)">A14</button>
+      <button class="seat" onclick="selectSeat(this)">A15</button>
+      <button class="seat" onclick="selectSeat(this)">A16</button>
+      <button class="seat" onclick="selectSeat(this)">A17</button>
+      <button class="seat" onclick="selectSeat(this)">A18</button>
+      <button class="seat" onclick="selectSeat(this)">A19</button>
+      <button class="seat" onclick="selectSeat(this)">A20</button>
+
+    </div>
+    <!-- แถวที่ 2 -->
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">B1</button>
+      <button class="seat" onclick="selectSeat(this)">B2</button>
+      <button class="seat" onclick="selectSeat(this)">B3</button>
+      <button class="seat" onclick="selectSeat(this)">B4</button>
+      <button class="seat" onclick="selectSeat(this)">B5</button>
+      <button class="seat" onclick="selectSeat(this)">A6</button>
+      <button class="seat" onclick="selectSeat(this)">B7</button>
+      <button class="seat" onclick="selectSeat(this)">B8</button>
+      <button class="seat" onclick="selectSeat(this)">B9</button>
+      <button class="seat" onclick="selectSeat(this)">B10</button>
+      <button class="seat" onclick="selectSeat(this)">B11</button>
+      <button class="seat" onclick="selectSeat(this)">B12</button>
+      <button class="seat" onclick="selectSeat(this)">B13</button>
+      <button class="seat" onclick="selectSeat(this)">B14</button>
+      <button class="seat" onclick="selectSeat(this)">B15</button>
+      <button class="seat" onclick="selectSeat(this)">B16</button>
+      <button class="seat" onclick="selectSeat(this)">B17</button>
+      <button class="seat" onclick="selectSeat(this)">B18</button>
+      <button class="seat" onclick="selectSeat(this)">B19</button>
+      <button class="seat" onclick="selectSeat(this)">B20</button>
+
+    </div>
+    <!-- แถวที่ 3 -->
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">C1</button>
+      <button class="seat" onclick="selectSeat(this)">C2</button>
+      <button class="seat" onclick="selectSeat(this)">C3</button>
+      <button class="seat" onclick="selectSeat(this)">C4</button>
+      <button class="seat" onclick="selectSeat(this)">C5</button>
+      <button class="seat" onclick="selectSeat(this)">C6</button>
+      <button class="seat" onclick="selectSeat(this)">C7</button>
+      <button class="seat" onclick="selectSeat(this)">C8</button>
+      <button class="seat" onclick="selectSeat(this)">C9</button>
+      <button class="seat" onclick="selectSeat(this)">C10</button>
+      <button class="seat" onclick="selectSeat(this)">C11</button>
+      <button class="seat" onclick="selectSeat(this)">C12</button>
+      <button class="seat" onclick="selectSeat(this)">C13</button>
+      <button class="seat" onclick="selectSeat(this)">C14</button>
+      <button class="seat" onclick="selectSeat(this)">C15</button>
+      <button class="seat" onclick="selectSeat(this)">C16</button>
+      <button class="seat" onclick="selectSeat(this)">C17</button>
+      <button class="seat" onclick="selectSeat(this)">C18</button>
+      <button class="seat" onclick="selectSeat(this)">C19</button>
+      <button class="seat" onclick="selectSeat(this)">C20</button>
+
+    </div>
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">D1</button>
+      <button class="seat" onclick="selectSeat(this)">D2</button>
+      <button class="seat" onclick="selectSeat(this)">D3</button>
+      <button class="seat" onclick="selectSeat(this)">D4</button>
+      <button class="seat" onclick="selectSeat(this)">D5</button>
+      <button class="seat" onclick="selectSeat(this)">D6</button>
+      <button class="seat" onclick="selectSeat(this)">D7</button>
+      <button class="seat" onclick="selectSeat(this)">D8</button>
+      <button class="seat" onclick="selectSeat(this)">D9</button>
+      <button class="seat" onclick="selectSeat(this)">D10</button>
+      <button class="seat" onclick="selectSeat(this)">D11</button>
+      <button class="seat" onclick="selectSeat(this)">D12</button>
+      <button class="seat" onclick="selectSeat(this)">D13</button>
+      <button class="seat" onclick="selectSeat(this)">D14</button>
+      <button class="seat" onclick="selectSeat(this)">D15</button>
+      <button class="seat" onclick="selectSeat(this)">D16</button>
+      <button class="seat" onclick="selectSeat(this)">D17</button>
+      <button class="seat" onclick="selectSeat(this)">D18</button>
+      <button class="seat" onclick="selectSeat(this)">D19</button>
+      <button class="seat" onclick="selectSeat(this)">D20</button>
+
+    </div>
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">E1</button>
+      <button class="seat" onclick="selectSeat(this)">E2</button>
+      <button class="seat" onclick="selectSeat(this)">E3</button>
+      <button class="seat" onclick="selectSeat(this)">E4</button>
+      <button class="seat" onclick="selectSeat(this)">E5</button>
+      <button class="seat" onclick="selectSeat(this)">E6</button>
+      <button class="seat" onclick="selectSeat(this)">E7</button>
+      <button class="seat" onclick="selectSeat(this)">E8</button>
+      <button class="seat" onclick="selectSeat(this)">E9</button>
+      <button class="seat" onclick="selectSeat(this)">E10</button>
+      <button class="seat" onclick="selectSeat(this)">E11</button>
+      <button class="seat" onclick="selectSeat(this)">E12</button>
+      <button class="seat" onclick="selectSeat(this)">E13</button>
+      <button class="seat" onclick="selectSeat(this)">E14</button>
+      <button class="seat" onclick="selectSeat(this)">E15</button>
+      <button class="seat" onclick="selectSeat(this)">E16</button>
+      <button class="seat" onclick="selectSeat(this)">E17</button>
+      <button class="seat" onclick="selectSeat(this)">E18</button>
+      <button class="seat" onclick="selectSeat(this)">E19</button>
+      <button class="seat" onclick="selectSeat(this)">E20</button>
+
+    </div>
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">F1</button>
+      <button class="seat" onclick="selectSeat(this)">F2</button>
+      <button class="seat" onclick="selectSeat(this)">F3</button>
+      <button class="seat" onclick="selectSeat(this)">F4</button>
+      <button class="seat" onclick="selectSeat(this)">F5</button>
+      <button class="seat" onclick="selectSeat(this)">F6</button>
+      <button class="seat" onclick="selectSeat(this)">F7</button>
+      <button class="seat" onclick="selectSeat(this)">F8</button>
+      <button class="seat" onclick="selectSeat(this)">F9</button>
+      <button class="seat" onclick="selectSeat(this)">F10</button>
+      <button class="seat" onclick="selectSeat(this)">F11</button>
+      <button class="seat" onclick="selectSeat(this)">F12</button>
+      <button class="seat" onclick="selectSeat(this)">F13</button>
+      <button class="seat" onclick="selectSeat(this)">F14</button>
+      <button class="seat" onclick="selectSeat(this)">F15</button>
+      <button class="seat" onclick="selectSeat(this)">F16</button>
+      <button class="seat" onclick="selectSeat(this)">F17</button>
+      <button class="seat" onclick="selectSeat(this)">F18</button>
+      <button class="seat" onclick="selectSeat(this)">F19</button>
+      <button class="seat" onclick="selectSeat(this)">F20</button>
+
+    </div>
+    <div class="row">
+      <button class="seat" onclick="selectSeat(this)">G1</button>
+      <button class="seat" onclick="selectSeat(this)">G2</button>
+      <button class="seat" onclick="selectSeat(this)">G3</button>
+      <button class="seat" onclick="selectSeat(this)">G4</button>
+      <button class="seat" onclick="selectSeat(this)">G5</button>
+      <button class="seat" onclick="selectSeat(this)">G6</button>
+      <button class="seat" onclick="selectSeat(this)">G7</button>
+      <button class="seat" onclick="selectSeat(this)">G8</button>
+      <button class="seat" onclick="selectSeat(this)">G9</button>
+      <button class="seat" onclick="selectSeat(this)">G10</button>
+      <button class="seat" onclick="selectSeat(this)">G11</button>
+      <button class="seat" onclick="selectSeat(this)">G12</button>
+      <button class="seat" onclick="selectSeat(this)">G13</button>
+      <button class="seat" onclick="selectSeat(this)">G14</button>
+      <button class="seat" onclick="selectSeat(this)">G15</button>
+      <button class="seat" onclick="selectSeat(this)">G16</button>
+      <button class="seat" onclick="selectSeat(this)">G17</button>
+      <button class="seat" onclick="selectSeat(this)">G18</button>
+      <button class="seat" onclick="selectSeat(this)">G19</button>
+      <button class="seat" onclick="selectSeat(this)">G20</button>
+
+
+    <!-- เพิ่มแถวที่นั่งตามต้องการ -->
+  </div>
+
+  <!-- ปุ่มยืนยันการจอง -->
+  <button id="confirm-btn" style="display:none;" onclick="confirmBooking()">Confirm</button>
+</section>
+
+
+
+<!-- ส่วนแสดงข้อมูลการจอง -->
+<section id="confirmation" style="display: none;">
+  <div id="account-btn" onclick="goToAccountPage()" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
+    <img src="Piceturemovies\icons8-account-32.png"style="width: 30px; height: 30px; border-radius: 50%;"/>
+  </div>
+  
+  <div id="booking-card" class="card">
+    <h2>Booking Information</h2>
+    
+    <!-- โปสเตอร์ของภาพยนตร์ -->
+    <img id="movie-poster" src="" alt="Movie Poster" style="width: 50%; height: auto; border-radius: 10px; margin-bottom: 20px;">
+    <p id="movie-name">คุณเลือกภาพยนตร์: <strong>THE LORD OF THE RINGS</strong></p>
+    <p id="selected-time">คุณเลือกเวลา: <strong>10:00</strong></p>
+    <p id="ticket-seats">ที่นั่งที่จอง: <strong>G11</strong></p>
+    <p>Thank you for booking your tickets with us!</p>
+</div>
+
+    <!-- ปุ่มกลับไปที่หน้าเลือกหนัง -->
+    <!-- ปุ่มกลับไปที่หน้าเลือกหนัง -->
+<button id="back-to-movie-selection-btn" onclick="goBackToMovieSelection()">Back to Movie Selection</button>
+
+<style>
+  #back-to-movie-selection-btn {
+    font-size: 18px; /* ขนาดตัวอักษร */
+
+    width: 280px; /* กำหนดความกว้างของปุ่ม */
+    height: 40px; /* กำหนดความสูงของปุ่ม */
+    background-color: #007bff;; /* สีพื้นหลัง */
+    color: white; /* สีตัวอักษร */
+    border: none; /* ลบเส้นขอบ */
+    border-radius: 5px; /* มุมโค้ง */
+  }
+  
+  /* การเปลี่ยนสีเมื่อเอาเมาส์ไปวางที่ปุ่ม */
+  #back-to-movie-selection-btn:hover {
+    background-color: #007bff;
+  }
+</style>
+
+  <script>
+    function confirmBooking() {
+      window.location.href = 'confirmation.html'; // ไปยังหน้า AccountPage
+    }
+  </script>
+</section>
+
+
+
+
+
+  <script>
+    // ฟังก์ชันการแสดงหน้าจอล็อกอิน
+    function showLogin() {
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('movie-selection').style.display = 'none';
+      document.getElementById('seat-selection').style.display = 'none'; // ซ่อนหน้าที่นั่ง
+      document.getElementById('confirmation').style.display = 'none'; // ซ่อนหน้าเสร็จสิ้น
+    }
+
+    // ฟังก์ชันการแสดงหน้าลงทะเบียน
+    function showRegister() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('register-form').style.display = 'block';
+    }
+
+    // ฟังก์ชันการสมัครสมาชิก
+    function registerUser(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password !== confirmPassword) {
+        alert('Password Dont match');
+        return;
+      }
+
+      // เก็บข้อมูลลงใน LocalStorage (หรือเชื่อมกับฐานข้อมูลจริง)
+      localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+
+      alert('Register Success');
+      showLogin(); // เปลี่ยนไปหน้าล็อกอิน
+    }
+
+    // ฟังก์ชันการเข้าสู่ระบบ
+    function loginUser(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+
+      const storedUsername = localStorage.getItem('username');
+      const storedPassword = localStorage.getItem('password');
+
+      if (username === storedUsername && password === storedPassword) {
+        alert('Login successful');
+        showMovieSelection(); // เปลี่ยนไปเลือกภาพยนตร์
+      } else {
+        alert('The username or password is incorrect.');
+      }
+    }
+
+
+    // ฟังก์ชันเมื่อเข้าสู่ระบบแล้วให้แสดงหน้าเลือกภาพยนตร์
+    function showMovieSelection() {
+      document.getElementById('login-register-container').style.display = 'none'; // ซ่อนล็อกอิน/ลงทะเบียน
+      document.getElementById('movie-selection').style.display = 'block'; // แสดงหน้าเลือกภาพยนตร์
+    }
+
+    // ฟังก์ชันการเลือกภาพยนตร์
+    function selectMovie(movieName, time) {
+      // เก็บข้อมูลภาพยนตร์และเวลาใน LocalStorage
+      
+      localStorage.setItem('selectedMovie', movieName);
+      localStorage.setItem('selectedTime', time);
+
+      // แสดงข้อความแสดงภาพยนตร์ที่เลือก
+      document.getElementById('movie-name').innerText = `คุณเลือกภาพยนตร์: ${movieName} เวลา: ${time}`;
+
+      // แสดงหน้าเลือกที่นั่ง
+      document.getElementById('seat-selection').style.display = 'block';
+      document.getElementById('movie-selection').style.display = 'none';
+
+      // โหลดที่นั่งที่จองไว้สำหรับภาพยนตร์นี้
+      loadSeats();
+    }
+
+
+
+
+    // ฟังก์ชันสำหรับกลับไปที่หน้าเลือกหนัง
+    function goBackToMovieSelection() {
+      console.log('VSEG clicked!'); // เพื่อทดสอบว่าไปถึงฟังก์ชันนี้หรือไม่
+
+      // แสดงหน้าเลือกภาพยนตร์
+      document.getElementById('movie-selection').style.display = 'block';
+
+      // ซ่อนหน้าอื่นๆ ที่ไม่เกี่ยวข้อง
+      document.getElementById('seat-selection').style.display = 'none'; // ซ่อนหน้าเลือกที่นั่ง
+      document.getElementById('confirmation').style.display = 'none'; // ซ่อนหน้าข้อมูลการจอง
+      document.getElementById('login-register-container').style.display = 'none'; // ซ่อนหน้า login/ register ถ้ามี
+    }
+
+
+
+
+
+    // ฟังก์ชันการเลือกที่นั่ง
+    let selectedTime = null;
+    let selectedSeats = [];
+
+    function selectSeat(seat) {
+      const movieName = localStorage.getItem('selectedMovie'); // ดึงชื่อภาพยนตร์ที่เลือกจาก LocalStorage
+      if (!movieName) return; // ถ้าไม่มีภาพยนตร์ที่เลือก ให้ไม่ทำงาน
+
+      // ตรวจสอบสถานะที่นั่ง
+      if (seat.style.backgroundColor === 'green') {
+        seat.style.backgroundColor = ''; // ถ้าเลือกซ้ำให้ยกเลิกการเลือก
+        selectedSeats = selectedSeats.filter(s => s !== seat.innerText); // เอาที่นั่งออกจากอาร์เรย์
+      } else {
+        seat.style.backgroundColor = 'green'; // ทำให้ที่นั่งที่เลือกเป็นสีเขียว
+        selectedSeats.push(seat.innerText); // เพิ่มที่นั่งเข้าในอาร์เรย์
+      }
+
+      // บันทึกข้อมูลที่นั่งใน LocalStorage
+      const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats')) || {};
+      bookedSeats[movieName] = selectedSeats;
+      localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
+
+      // ตรวจสอบว่าเลือกทั้งเวลาและที่นั่งหรือยัง
+      checkConfirmButton();
+    }
+
+    // ฟังก์ชันโหลดข้อมูลที่นั่งจาก LocalStorage
+    function loadSeats() {
+      const movieName = localStorage.getItem('selectedMovie'); // ดึงชื่อภาพยนตร์ที่เลือก
+      if (!movieName) return; // ถ้าไม่มีภาพยนตร์ที่เลือกให้ไม่ทำงาน
+
+      const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats')) || {};
+      const savedSeats = bookedSeats[movieName] || []; // ดึงที่นั่งที่จองไว้สำหรับภาพยนตร์นี้
+
+      selectedSeats = savedSeats; // ตั้งค่าข้อมูลที่นั่งที่เลือกจาก LocalStorage
+
+      // แสดงการเลือกที่นั่งจาก LocalStorage
+      const seats = document.querySelectorAll('.seat'); // ดึงปุ่มที่นั่งทั้งหมด
+      seats.forEach(seat => {
+        if (savedSeats.includes(seat.innerText)) {
+          seat.style.backgroundColor = 'green'; // ถ้าที่นั่งนั้นถูกเลือก ให้ทำให้สีเป็นสีเขียว
+        } else {
+          seat.style.backgroundColor = ''; // ถ้าไม่ถูกเลือก ให้สีเป็นปกติ
+        }
+      });
+    }
+    function selectTime(time) {
+      // เก็บข้อมูลเวลาใน LocalStorage
+      localStorage.setItem('selectedTime', time);
+
+      // กำหนด selectedTime เป็นค่าที่เลือก
+      selectedTime = time;
+
+      // แสดงเวลาในหน้าจอ
+      document.getElementById('selected-time').innerText = `คุณเลือกเวลา: ${time}`;
+
+      // ตรวจสอบว่าเลือกทั้งเวลาและที่นั่งหรือยัง
+      checkConfirmButton();
+    }
+    function checkConfirmButton() {
+      if (selectedTime && selectedSeats.length > 0) {
+        // หากเลือกทั้งเวลาและที่นั่งแล้ว ให้แสดงปุ่ม Confirm
+        document.getElementById('confirm-btn').style.display = 'block';
+      } else {
+        // หากยังไม่ได้เลือกทั้งเวลาและที่นั่ง จะซ่อนปุ่ม Confirm
+        document.getElementById('confirm-btn').style.display = 'none';
+      }
+    }
+    // เรียกใช้ฟังก์ชันเมื่อหน้าโหลด
+    window.onload = function() {
+      loadSeats(); // โหลดข้อมูลที่นั่งจาก LocalStorage เมื่อหน้าโหลดใหม่
+      checkConfirmButton(); // ตรวจสอบสถานะของปุ่ม Confirm
+    };
+
+    // ฟังก์ชันยืนยันการจอง
+    function confirmBooking() {
+      const movieName = localStorage.getItem('selectedMovie'); // ดึงชื่อภาพยนตร์ที่เลือก
+      const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats')) || {};
+      const seats = bookedSeats[movieName] || []; // ดึงที่นั่งที่เลือกสำหรับภาพยนตร์นี้
+
+      if (!movieName || seats.length === 0) {
+        alert('ไม่มีข้อมูลการจอง');
+        return;
+      }
+
+      alert('Booking confirmed');
+
+      // แสดงหน้าข้อมูลการจอง
+      document.getElementById('confirmation').style.display = 'block';
+      document.getElementById('seat-selection').style.display = 'none';
+
+      // แสดงข้อมูลการจอง
+
+      
+      document.getElementById('movie-name').innerText = `คุณเลือกภาพยนตร์: ${movieName}`;
+      document.getElementById('ticket-seats').innerText = `ที่นั่งที่จอง: ${seats.join(', ')}`;
+    }
+    const timeButtons = document.querySelectorAll('.time-btn');
+
+    timeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // ลบคลาส .selected จากปุ่มทั้งหมด
+        timeButtons.forEach(btn => btn.classList.remove('selected'));
+
+        // เพิ่มคลาส .selected ไปยังปุ่มที่ถูกคลิก
+        this.classList.add('selected');
+      });
+    });
+
+
+  </script>
+</body>
+
+</html>

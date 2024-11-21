@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSEGTEAMS</title>
+  <link rel="stylesheet" href="style.css"> <!-- หากมีไฟล์ CSS -->
+</head>
+<body>
+
+  <!-- ปุ่มกลับไปที่หน้าเลือกหนัง (รูป) -->
+  <div style="position: fixed; top: 10px; left: 10px;">
+    <a href="javascript:void(0);" onclick="goBackToMovieSelection()">
+      <img src="Piceturemovies\icons8-back-50.png" style="width: 40px; height: 40px; cursor: pointer;">
+    </a>
+  </div>
+  
+
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+      <button 
+        onclick="logout()" 
+        style="
+          background-color: #007bff;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 14px;
+        "
+        onmouseover="this.style.backgroundColor='#45a049';" 
+        onmouseout="this.style.backgroundColor='#4CAF50';">
+        Logout
+      </button>
+    </div>
+    
+    <script>
+      function logout() {
+        // ล้างข้อมูลใน localStorage (ถ้ามีการใช้งาน)
+        localStorage.clear();
+    
+        // แสดงข้อความแจ้งเตือน (ถ้าต้องการ)
+        alert('You have been logged out.');
+    
+        // เปลี่ยนเส้นทางไปยังหน้า Login
+        window.location.href = "index.html";
+      }
+    </script>
+    
+
+</div>
+
+
+  <!-- ข้อมูลบัญชี -->
+  <div id="account-info" style="text-align: center; margin-top: 100px;">
+    <img src="user.png" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;">
+    <h2>Art Ochey</h2>
+    <p>Email: darunpob.naja@bumail.net</p>
+  </div>
+
+  <!-- ส่วนแสดงประวัติการจองตั๋ว -->
+  <div id="booking-history" style="text-align: center; margin-top: 30px;">
+    <h3>Booking History</h3>
+    <table style="margin: 0 auto; border-collapse: collapse; width: 80%; max-width: 600px;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Movie</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Seats</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Date</th>
+        </tr>
+      </thead>
+      <tbody id="booking-history-list">
+        <!-- ประวัติการจองจะถูกแสดงที่นี่ -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // ตัวอย่างข้อมูลที่เก็บไว้ใน localStorage (คุณสามารถเพิ่มหรือเปลี่ยนแปลงข้อมูลจริง)
+    const bookingHistory = [
+      {
+        movieName: "THE LORD OF THE RINGS",
+        seats: "G11, G12",
+        date: "2024-11-20"
+      },
+      {
+        movieName: "AVATAR",
+        seats: "A1, A2",
+        date: "2024-11-15"
+      }
+    ];
+
+    // ฟังก์ชันเพื่อแสดงประวัติการจอง
+    function loadBookingHistory() {
+      const historyList = document.getElementById('booking-history-list');
+
+      // ลบข้อมูลเก่าก่อน
+      historyList.innerHTML = '';
+
+      // แสดงประวัติการจองแต่ละรายการ
+      bookingHistory.forEach(booking => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="border: 1px solid #ddd; padding: 8px;">${booking.movieName}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${booking.seats}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${booking.date}</td>
+        `;
+        historyList.appendChild(row);
+      });
+    }
+
+    // เรียกฟังก์ชันเมื่อหน้าโหลดเสร็จ
+    loadBookingHistory();
+  </script>
+
+</body>
+</html>
